@@ -7,14 +7,39 @@ Resources:
     Type: "AWS::S3::Bucket"
     Properties:
       BucketName: "photo-album-demo"
+  
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties: 
+      Bucket: "photo-album-demo"
+      PolicyDocument: {
+        "Version": "2012-10-17",
+        "Id": "MyPolicy",
+        "Statement": [
+          {
+            "Sid": "PublicReadForGetBucketObjects",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::photo-album-demo/*"
+          }
+        ]
+      }
 
 
-  PALexdemo:
+  PhtotAlbumAPI:        
+    Type: AWS::ApiGateway::RestApi
+    Properties: 
+      CloneFrom: "vffoznfks6"
+      Name: "Photo Album API Demo"
+
+
+  LFLexDemo:
     Type: "AWS::Serverless::Function"
     Properties:
       Handler: lambda_function.lambda_handler
       Runtime: python3.7
-      CodeUri: ./Lambda-lex
+      CodeUri: "s3://photo-album-code/LF-Lex-Parse.zip"
       Description: "Lambda function for search query parsing."
       MemorySize: 128
       Timeout: 10
@@ -30,12 +55,12 @@ Resources:
       #       Method: get
 
 
-  PALF1demo:
+  LF1Demo:
     Type: "AWS::Serverless::Function"
     Properties:
       Handler: lambda_function.lambda_handler
       Runtime: python3.7
-      CodeUri: ./Lambda-LF1
+      CodeUri: "s3://photo-album-code/LF1-Index-Photos.zip"
       Description: "Lambda function for photo indexing"
       MemorySize: 128
       Timeout: 10
@@ -83,12 +108,12 @@ Resources:
   
 
 
-  PALF2demo:
+  LF2Demo:
     Type: "AWS::Serverless::Function"
     Properties:
       Handler: lambda_function.lambda_handler
       Runtime: python3.7
-      CodeUri: ./Lambda-LF2
+      CodeUri: 's3://photo-album-code/LF2-Search-Photos.zip'
       Description: "Lambda function for photo searching"
       MemorySize: 128
       Timeout: 10
@@ -108,6 +133,41 @@ Resources:
         SubnetIds:
           - subnet-0da92ed308455f87e
           - subnet-0b904293e6384e422
+  
+
+  PhotoAlbumElasticsearch:
+    Type: AWS::Elasticsearch::Domain
+    Properties: 
+      AccessPolicies: {
+                        "Version": "2012-10-17",
+                        "Statement": [
+                          {
+                            "Effect": "Allow",
+                            "Principal": {
+                              "AWS": "*"
+                            },
+                            "Action": "es:*",
+                            "Resource": "arn:aws:es:us-east-1:336385704730:domain/photo-album-demo/*"
+                          }
+                        ]
+                      }
+      DomainName: "photo-album-demo"
+      ElasticsearchVersion: "7.8"
+      ElasticsearchClusterConfig:
+        DedicatedMasterEnabled: "false"
+        InstanceCount: "1"
+        ZoneAwarenessEnabled: "false"
+        InstanceType: "t2.small.elasticsearch"
+      EBSOptions:
+        EBSEnabled: true
+        Iops: 0
+        VolumeSize: 10
+        VolumeType: "gp2"
+      VPCOptions: 
+        SecurityGroupIds:
+          - sg-0dea01d5f5237e9c3
+        SubnetIds:
+          - subnet-0da92ed308455f87e
 
       
       
