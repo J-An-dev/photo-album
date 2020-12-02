@@ -36,12 +36,12 @@ def lambda_handler(event, context):
     headers = {"Content-Type": "application/json"}
     for key, value in keywords_dic.items():
         if value != None:
-            es_url = 'https://vpc-photos-otxykf3zrhb7byol7rz46an7u4.us-east-1.es.amazonaws.com/photos/_search?q=' + value
+            es_url = 'https://vpc-photo-album-demo-boli5szfzjsw6ibw6yil7idcbe.us-east-1.es.amazonaws.com/photos/_search?q=' + value
             response = requests.get(es_url, headers=headers, auth=awsauth)
             data = response.json()
             for res in data["hits"]["hits"]:
                 photo_name = str(res["_source"]["objectKey"])
-                photo_url = 'https://photo-album-vpc.s3.amazonaws.com/' + photo_name
+                photo_url = 'https://photo-album-demo.s3.amazonaws.com/' + photo_name
                 if photo_url not in photo_list:
                     photo_list.append(photo_url)
     print(photo_list)

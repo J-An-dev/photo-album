@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>PhotoAlbum</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- ZMDI Material Design CDN -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <!-- AWS SDK apigClient -->
+    <script type="text/javascript"
+            src="../js/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript"
+            src="../js/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="../js/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="../js/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript"
+            src="../js/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript"
+            src="../js/lib/url-template/url-template.js"></script>
+    <script type="text/javascript"
+            src="../js/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript"
+            src="../js/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript"
+            src="../js/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="../js/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="../js/apigClient.js"></script>
+</head>
+<body>
+<!-- Real-time search using Amazon Transcribe -->
+<div class="container">
+    <div class="search">
+        <form method="get" id="search_form">
+            <div class="input-group">
+                <input id="note-textarea" type="text" class="form-control" placeholder="Search photos" name="search">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+        <br>
+        <button id="start-record-btn" title="Start Recording">Start Recording</button>
+        <button id="pause-record-btn" title="Pause Recording">Stop Recording</button>
+
+        <br><br><br>
+
+        <!-- File upload -->
+        <div class="input-group">
+            <input type="file" class="form-control" name="search" id="file_path">
+        </div>
+        <br>
+        <!-- <input type="button" class="button" value="Upload Photos" id="upload-btn"> -->
+        <button id="upload-btn" title="Upload Photos">Upload Photos</button>
+        <div id="results" style="margin-top: 20px">
+        </div>
+</div>
+
+<!-- Inserting these scripts at the end to be able to use all the elements in the DOM -->
+<!-- <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script> -->
+
+<!-- AWS Transcibe and File upload script -->
+<script type="text/javascript" src="../js/main.js"></script>
+<script type="text/javascript" src="../js/script.js"></script>
+</body>
+</html>

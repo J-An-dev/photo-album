@@ -44,7 +44,7 @@ def lambda_handler(event, context):
     result = json.dumps(result)
 
     # Store JSON object in ES
-    host = "vpc-photos-otxykf3zrhb7byol7rz46an7u4.us-east-1.es.amazonaws.com"
+    host = "vpc-photo-album-demo-boli5szfzjsw6ibw6yil7idcbe.us-east-1.es.amazonaws.com"
     es = Elasticsearch(
         hosts=[{'host': host, 'port': 443}],
         http_auth=awsauth,
