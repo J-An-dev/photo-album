@@ -1,0 +1,114 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
+Description: Photo Album application stack
+
+Resources:
+  Bucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: "photo-album-demo"
+
+
+  PALexdemo:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.7
+      CodeUri: ./Lambda-lex
+      Description: "Lambda function for search query parsing."
+      MemorySize: 128
+      Timeout: 10
+      Role: "arn:aws:iam::336385704730:role/lex-lambda"
+      Environment:
+        Variables:
+          REGION: us-east-1
+      # Events:
+      #   LexAPI:
+      #     Type: Api
+      #     Properties:
+      #       Path: /search
+      #       Method: get
+
+
+  PALF1demo:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.7
+      CodeUri: ./Lambda-LF1
+      Description: "Lambda function for photo indexing"
+      MemorySize: 128
+      Timeout: 10
+      Role: "arn:aws:iam::336385704730:role/s3-lambda"
+      Events:
+        NewUploadJPG:
+          Type: S3
+          Properties:
+            Bucket: !Ref Bucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: suffix
+                    Value: .jpg
+        NewUploadJPEG:
+          Type: S3
+          Properties:
+            Bucket: !Ref Bucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: suffix
+                    Value: .jpeg
+        NewUploadPNG:
+          Type: S3
+          Properties:
+            Bucket: !Ref Bucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: suffix
+                    Value: .png
+      Environment:
+        Variables:
+          REGION: us-east-1
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0dea01d5f5237e9c3
+        SubnetIds:
+          - subnet-0da92ed308455f87e
+          - subnet-0b904293e6384e422
+  
+
+
+  PALF2demo:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.7
+      CodeUri: ./Lambda-LF2
+      Description: "Lambda function for photo searching"
+      MemorySize: 128
+      Timeout: 10
+      Role: "arn:aws:iam::336385704730:role/lex-lambda"
+      # Events:
+      #   SearchAPI:
+      #     Type: Api
+      #     Properties:
+      #       Path: /es
+      #       Method: put
+      Environment:
+        Variables:
+          REGION: us-east-1
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0dea01d5f5237e9c3
+        SubnetIds:
+          - subnet-0da92ed308455f87e
+          - subnet-0b904293e6384e422
+
+      
+      
+      
