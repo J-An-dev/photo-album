@@ -34,6 +34,7 @@ def lambda_handler(event, context):
         
         return build_response(200, keywords)
         
+        
     else:
         return build_response(200, "Can not understand your query.")
     
