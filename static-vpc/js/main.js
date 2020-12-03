@@ -20,7 +20,7 @@ function send_request(query) {
     $.ajax({
         method: 'GET',
         // headers: {'Access-Control-Allow-Origin': '*'},
-        url: 'https://cors-anywhere.herokuapp.com/https://bgn22op196.execute-api.us-east-1.amazonaws.com/api/search?q=' + query,
+        url: 'https://cors-anywhere.herokuapp.com/https://t9i7r8puw0.execute-api.us-east-1.amazonaws.com/api/search?q=' + query,
         success: function (res) {
             console.log(res);
             body = res["body"];
@@ -34,7 +34,7 @@ function send_request(query) {
                     data: JSON.stringify(body),
                     contentType: 'application/json',
                     dataType: 'json',
-                    url: 'https://cors-anywhere.herokuapp.com/https://bgn22op196.execute-api.us-east-1.amazonaws.com/api/es',
+                    url: 'https://cors-anywhere.herokuapp.com/https://t9i7r8puw0.execute-api.us-east-1.amazonaws.com/api/es',
                     success: function (res) {
                         console.log(res);
                         body = res["body"]
@@ -76,7 +76,7 @@ $(document).ready(function () {
         let config = {
             headers: { 'Content-Type': files.type }
         };
-        url = 'https://cors-anywhere.herokuapp.com/https://bgn22op196.execute-api.us-east-1.amazonaws.com/api/upload/photo-album-demo/' + files.name
+        url = 'https://cors-anywhere.herokuapp.com/https://t9i7r8puw0.execute-api.us-east-1.amazonaws.com/api/upload/photo-album-demo/' + files.name
         axios.put(url, files, config).then(response => {
             console.log(response)
             alert("Photo uploaded successfully!");
