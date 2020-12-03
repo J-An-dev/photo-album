@@ -39,7 +39,7 @@ Resources:
     Properties:
       Handler: lambda_function.lambda_handler
       Runtime: python3.7
-      CodeUri: ./Lambda-lex
+      CodeUri: "s3://photo-album-code/LF-Lex-Parse.zip"
       Description: "Lambda function for search query parsing."
       MemorySize: 128
       Timeout: 10
@@ -60,7 +60,7 @@ Resources:
     Properties:
       Handler: lambda_function.lambda_handler
       Runtime: python3.7
-      CodeUri: ./Lambda-LF1
+      CodeUri: "s3://photo-album-code/LF1-Index-Photos.zip"
       Description: "Lambda function for photo indexing"
       MemorySize: 128
       Timeout: 10
@@ -113,7 +113,7 @@ Resources:
     Properties:
       Handler: lambda_function.lambda_handler
       Runtime: python3.7
-      CodeUri: ./Lambda-LF2
+      CodeUri: "s3://photo-album-code/LF2-Search-Photos.zip"
       Description: "Lambda function for photo searching"
       MemorySize: 128
       Timeout: 10
