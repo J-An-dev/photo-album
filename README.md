@@ -7,7 +7,7 @@ Meanwhile, a CloudFormation template is also designed to help set up the entire 
 
 ## Workflow
 
-A workflow demo video for this project:
+A workflow demo video for this project: https://www.youtube.com/watch?v=9kT48OM7Q-0
 
 ### Photo Searching
 In the application front-end interaction web page, a user can input the search query in the searching bar using plain text and voice. To enable voice searching, the user first should click `Start Recording` button and start speaking the query, then click `Stop Recording` when finished. The front-end JavaScript would automatically convert the vioce recording into plain text and display it in the searching bar. User clicks the search button to trigger the searching process. If the back-end services find the matching photos, those photos would be displayed in the web page. If nothing matched photos are found, a line with `Can not find the photos you want.` would show. If the user's search query can not be parsed by the back-end services, a line with `Can not understand your query.` would show.
@@ -127,10 +127,9 @@ The API should have three methods:
 1. The template `CloudFormation.yaml` declares functions, APIs, S3 bucket, Elasticsearch instance and event source mappings in the AWS Serverless Application Model (SAM) framework.
 2. For Lambda functions, should upload the code into a separate S3 bucket `photo-album-code` and attach the file URL in S3 as `CodeUri` for deployment.
 3. Instead of adding API trigger under Lambda function `Events` property, it is more straightforward and comfortable for me to design the APIs in the console, and then choose to `CloneFrom` those finished APIs in the CloudFormation template to create.
-4. A thorough demo for CloudFormation configuration and afterwards adjustment could be found here:
+4. A thorough demo for CloudFormation configuration and afterwards adjustment could be found here: https://www.youtube.com/watch?v=9kT48OM7Q-0&t=149
 
 ### Deploy code using AWS CodePipeline
 1. Define a CodePipeline that builds and deploys the code for all the Lambda functions and integrated with GitHub. The configuration YAML files used for setup are `samTemplate.yaml` and `buildspec.yaml`. The `samTemplate.yaml` file is basically the same one as `CloudFormation.yaml` with only the `CodeUri` differences. For CodePipeline, Lambda function source code are linked to the folder in the integrated GitHub repo. A relative folder path is attached for each function which points to the folder stores the related function code. Later on, whenever the user pushes a new commit to the source code, the related Lambda function in AWS will be updated.
 2. Define a CodePipeline that deploys the front-end static web page code to the S3 bucket `photo-album-demo` and integrated with GitHub. This CodePipeline will simply copy all the files in the integrated GitHub repo to update,  whenever the user pushes a new commit to the repo.
-3. A thorough demo for CodePipeline configuration could be found here:
-
+3. A thorough demo for CodePipeline configuration could be found here: https://www.youtube.com/watch?v=9kT48OM7Q-0&t=315
